@@ -64,6 +64,23 @@ export default function Admin() {
     }
   }
 
+  async function remove() {
+    if (!confirm('Remove the current menu from the site?')) return;
+    setBusy(true); setError(''); setDone(null); setStatus('Removing menu…');
+    try {
+      sessionStorage.setItem('menu-pw', password);
+      const res = await fetch('/api/menu', { method: 'DELETE', headers: { 'x-admin-password': password } });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Remove failed');
+      setStatus('Menu removed.');
+    } catch (err) {
+      setError(err.message);
+      setStatus('');
+    } finally {
+      setBusy(false);
+    }
+  }
+
   return (
     <main className="page">
       <h1 className="title">Upload menu</h1>
@@ -94,6 +111,7 @@ export default function Admin() {
           </>
         )}
         <button className="primary" disabled={busy || !file}>{busy ? 'Working…' : 'Publish menu'}</button>
+        <button type="button" disabled={busy || !password} onClick={remove}>Remove current menu</button>
         {status && <p className="msg muted">{status}</p>}
         {error && <p className="msg err">{error}</p>}
         {done && (

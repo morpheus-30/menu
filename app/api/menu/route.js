@@ -1,7 +1,7 @@
 import { revalidatePath } from 'next/cache';
 import { isAdmin } from '@/lib/auth';
 import { structureMenu } from '@/lib/structure';
-import { saveMenu } from '@/lib/store';
+import { saveMenu, clearMenu } from '@/lib/store';
 
 export const maxDuration = 30;
 
@@ -18,6 +18,17 @@ export async function POST(req) {
     const menu = await saveMenu(parsed, image);
     revalidatePath('/');
     return Response.json({ ok: true, menu });
+  } catch (e) {
+    return Response.json({ error: e.message }, { status: 500 });
+  }
+}
+
+export async function DELETE(req) {
+  if (!isAdmin(req)) return Response.json({ error: 'Wrong password' }, { status: 401 });
+  try {
+    await clearMenu();
+    revalidatePath('/');
+    return Response.json({ ok: true });
   } catch (e) {
     return Response.json({ error: e.message }, { status: 500 });
   }
