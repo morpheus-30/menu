@@ -1,0 +1,69 @@
+:root {
+  --bg: #f3f5f4; --ink: #17211d; --mute: #66726d; --line: #dde3e0;
+  --accent: #2c6b55; --warn-bg: #fff2d4; --warn-ink: #6b4500; --warn-line: #ecd08a;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #131a17; --ink: #e8efec; --mute: #93a19b; --line: #29332f;
+    --accent: #6fc2a2; --warn-bg: #3a2d10; --warn-ink: #f3d9a0; --warn-line: #5c4a1c;
+  }
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0; color: var(--ink); background: var(--bg);
+  font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.page { max-width: 640px; margin: 0 auto; padding: 40px 20px 64px; }
+.head { margin-bottom: 24px; }
+.title { margin: 0; font-size: 1.1rem; font-weight: 600; letter-spacing: -0.01em; }
+.updated, .muted { margin: 4px 0 0; color: var(--mute); font-size: 0.9rem; }
+.dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-right: 8px; }
+
+.stale, .review {
+  border-radius: 10px; padding: 12px 14px; margin-bottom: 16px; font-size: 0.92rem;
+}
+.stale { background: var(--warn-bg); color: var(--warn-ink); border: 1px solid var(--warn-line); display: grid; gap: 2px; }
+.review { border: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.review button { background: none; border: 0; padding: 0; color: var(--accent); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
+.chips { display: flex; gap: 6px; overflow-x: auto; padding: 4px 0 20px; scrollbar-width: none; }
+.chip {
+  position: relative; flex: 1 0 auto; min-width: 48px; padding: 8px 12px; border-radius: 999px;
+  border: 1px solid var(--line); background: transparent; color: var(--mute);
+}
+.chip.on { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.chip i { position: absolute; top: 5px; right: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+.chip.on i { background: var(--bg); }
+
+.day h2 { margin: 0 0 8px; font-size: 2.4rem; line-height: 1.1; font-weight: 700; letter-spacing: -0.03em; }
+.today { margin-left: 12px; font-size: 0.9rem; font-weight: 500; letter-spacing: 0; color: var(--accent); vertical-align: middle; }
+.meal { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 16px 0; border-top: 1px solid var(--line); }
+.meal:first-of-type { margin-top: 16px; }
+.meal h3 { margin: 0; font-size: 0.95rem; font-weight: 600; color: var(--mute); }
+.meal p { margin: 0; }
+.notes { margin-top: 24px; color: var(--mute); font-size: 0.9rem; }
+@media (max-width: 480px) { .meal { grid-template-columns: 1fr; gap: 2px; } .day h2 { font-size: 2rem; } }
+
+.viewer { border: 0; padding: 0; max-width: min(96vw, 900px); max-height: 92vh; border-radius: 12px; background: var(--bg); }
+.viewer::backdrop { background: rgba(0,0,0,.6); }
+.viewer img { display: block; max-width: 100%; max-height: calc(92vh - 48px); margin: 0 auto; }
+.close { display: block; margin: 8px 8px 8px auto; background: none; border: 1px solid var(--line); border-radius: 8px; padding: 4px 12px; }
+
+/* admin */
+.form { display: grid; gap: 14px; margin-top: 20px; }
+.form label { display: grid; gap: 6px; font-size: 0.9rem; color: var(--mute); }
+.form input[type=password], .form input[type=file] {
+  padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: transparent; color: var(--ink); font: inherit;
+}
+.primary { padding: 11px 16px; border-radius: 8px; border: 0; background: var(--ink); color: var(--bg); font-weight: 600; }
+.primary:disabled { opacity: .5; cursor: default; }
+.msg { margin: 0; font-size: 0.92rem; }
+.err { color: #b3261e; }
+.link { color: var(--accent); }
+.preview { max-width: 100%; border-radius: 10px; border: 1px solid var(--line); }
+@media (prefers-reduced-motion: no-preference) { .chip { transition: background .15s, color .15s; } }
