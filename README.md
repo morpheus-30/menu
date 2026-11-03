@@ -2,7 +2,7 @@
 
 Next.js app. Public page at `/`, password-gated upload at `/admin`.
 
-Upload flow: image is shrunk and OCR'd in your browser (tesseract.js) -> text goes to Groq, which returns structured JSON -> image + JSON are stored in Vercel Blob.
+Upload flow: image is rotated (optional) and shrunk in your browser -> sent to a Groq vision model, which reads the table and returns structured JSON -> image + JSON are stored in Vercel Blob. No OCR step.
 
 ## Env vars
 See `.env.example`. Set `ADMIN_PASSWORD` and `GROQ_API_KEY` in Vercel, and create a Blob store (Storage tab) so `BLOB_READ_WRITE_TOKEN` is added automatically.

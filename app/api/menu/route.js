@@ -10,12 +10,11 @@ export async function POST(req) {
 
   const form = await req.formData();
   const image = form.get('image');
-  const ocrText = String(form.get('ocrText') || '');
   if (!image || typeof image === 'string') {
     return Response.json({ error: 'No image attached' }, { status: 400 });
   }
   try {
-    const parsed = await structureMenu(ocrText);
+    const parsed = await structureMenu(await image.arrayBuffer(), image.type || 'image/jpeg');
     const menu = await saveMenu(parsed, image);
     revalidatePath('/');
     return Response.json({ ok: true, menu });
