@@ -4,6 +4,8 @@ Next.js app. Public page at `/`, password-gated upload at `/admin`.
 
 Upload flow: image is rotated (optional) and shrunk in your browser -> sent to a Groq vision model, which reads the table and returns structured JSON -> image + JSON are stored in Vercel Blob. No OCR step.
 
+You can also forward the menu photo to a WhatsApp number to update the site: see `docs/WHATSAPP_SETUP.md`.
+
 ## Env vars
 See `.env.example`. Set `ADMIN_PASSWORD` and `GROQ_API_KEY` in Vercel, and create a Blob store (Storage tab) so `BLOB_READ_WRITE_TOKEN` is added automatically.
 
